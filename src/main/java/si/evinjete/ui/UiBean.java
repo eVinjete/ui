@@ -2,6 +2,8 @@ package si.evinjete.ui;
 
 import si.evinjete.uporabniki.Uporabnik;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -9,6 +11,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
 
+@Named
+@RequestScoped
 public class UiBean implements Serializable {
 
     WebTarget wb;
