@@ -2,7 +2,7 @@ package si.evinjete.ui;
 
 import si.evinjete.uporabniki.Uporabnik;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
 
 @Named
-@RequestScoped
+@SessionScoped
 public class UiBean implements Serializable {
 
     WebTarget wb;
@@ -23,6 +23,7 @@ public class UiBean implements Serializable {
     String surname;
     String email;
     String type;
+    String password;
 
     public String getName() {
         return name;
@@ -56,8 +57,15 @@ public class UiBean implements Serializable {
         this.type = type;
     }
 
-    public void registerUser() {
+    public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void registerUser() {
         Uporabnik uporabnik = new Uporabnik();
         uporabnik.setName(this.name);
         uporabnik.setSurname(this.surname);
@@ -68,11 +76,21 @@ public class UiBean implements Serializable {
         wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/uporabniki");
         String response = wb.request(MediaType.APPLICATION_JSON).post(Entity.json(uporabnik), String.class);
 
-        System.out.println("INFO -- user " + response + " registered. ");
+        System.out.println("INFO -- user " + response + " registered.");
 
         this.name = null;
         this.surname = null;
         this.email = null;
         this.type = null;
+    }
+
+    public void loginUser() {
+        Client client = ClientBuilder.newClient();
+        wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/uporabniki/email");
+        String response = wb.queryParam("email", this.email).request().get(String.class);
+
+        System.out.println("INFO -- user " + response + " logged-in.");
+
+        this.name = null;
     }
 }
