@@ -90,7 +90,7 @@ public class UiBean implements Serializable {
         Client client = ClientBuilder.newClient();
         wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/uporabniki/verify");
         String response = wb
-                .queryParam("email", this.email)
+                .queryParam("user", this.email)
                 .queryParam("password", this.password)
                 .request().get(String.class);
 
