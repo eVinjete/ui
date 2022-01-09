@@ -97,8 +97,6 @@ public class UiBean implements Serializable {
 
         System.out.println("INFO -- user " + response + " logged-in.");
 
-        String email = this.email;
-
         this.email = null;
         this.password = null;
 
