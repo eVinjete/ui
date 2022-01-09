@@ -88,7 +88,7 @@ public class UiBean implements Serializable {
 
     public String loginUser() {
         Client client = ClientBuilder.newClient();
-        wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/uporabniki/email");
+        wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/uporabniki/verify");
         String response = wb.queryParam("email", this.email).request().get(String.class);
 
         System.out.println("INFO -- user " + response + " logged-in.");
