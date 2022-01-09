@@ -96,19 +96,21 @@ public class UiBean implements Serializable {
                 .request().get();
 
         if (response.getStatus() == 406) {
+            this.email = null;
+            this.password = null;
             return "wrong";
         }
 
-        Uporabnik uporabnik = response.readEntity(Uporabnik.class);
-        System.out.println("INFO -- user " + uporabnik.getName() + " logged-in.");
-
-        //this.email = null;
-        //this.password = null;
-
         if (response.getStatus() == 200) {
+            Uporabnik uporabnik = response.readEntity(Uporabnik.class);
+            System.out.println("INFO -- user " + uporabnik.getName() + " logged-in.");
+            this.name = uporabnik.getName();
+            this.surname = uporabnik.getSurname();
             return "user";
         }
 
+        this.email = null;
+        this.password = null;
         return "wrong";
     }
 }
