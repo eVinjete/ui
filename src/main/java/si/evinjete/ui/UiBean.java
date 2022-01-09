@@ -70,6 +70,7 @@ public class UiBean implements Serializable {
         uporabnik.setName(this.name);
         uporabnik.setSurname(this.surname);
         uporabnik.setEmail(this.email);
+        uporabnik.setPassword(this.password);
         uporabnik.setType(Integer.parseInt(this.type));
 
         Client client = ClientBuilder.newClient();
@@ -81,16 +82,26 @@ public class UiBean implements Serializable {
         this.name = null;
         this.surname = null;
         this.email = null;
+        this.password = null;
         this.type = null;
     }
 
-    public void loginUser() {
+    public String loginUser() {
         Client client = ClientBuilder.newClient();
         wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/uporabniki/email");
         String response = wb.queryParam("email", this.email).request().get(String.class);
 
         System.out.println("INFO -- user " + response + " logged-in.");
 
-        this.name = null;
+        String email = this.email;
+
+        this.email = null;
+        this.password = null;
+
+        if (response.equals(email)) {
+            return "user";
+        }
+
+        return "wrong";
     }
 }

@@ -15,20 +15,10 @@
         <h:graphicImage width="70px" name="/img/logo.png"/>
     </header>
     <section>
-        <h4>Vpis</h4>
+        <div class="alert alert-danger">
+            Napačen e-naslov ali geslo.
+        </div>
         <h:form>
-            <div class="form-group">
-                <h:outputLabel for="email">E-naslov:</h:outputLabel>
-                <h:inputText styleClass="form-control" id="email" value="#{uiBean.email}"/>
-            </div>
-            <br/>
-            <div class="form-group">
-                <h:outputLabel for="password">Geslo:</h:outputLabel>
-                <h:inputText styleClass="form-control" id="password" value="#{uiBean.password}"/>
-            </div>
-            <h:commandButton styleClass="btn btn-primary" value="Potrdi" action="#{uiBean.loginUser()}"/>
-            <br/>
-            <br/>
             <h:commandButton styleClass="btn btn-secondary" value="Domov" action="welcome"/>
         </h:form>
     </section>
