@@ -65,7 +65,7 @@ public class UiBean implements Serializable {
         uporabnik.setType(Integer.parseInt(this.type));
 
         Client client = ClientBuilder.newClient();
-        wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/");
+        wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/uporabniki");
         String response = wb.request(MediaType.APPLICATION_JSON).post(Entity.json(uporabnik), String.class);
 
         System.out.println("INFO -- user " + response + " registered. ");
