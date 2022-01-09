@@ -95,10 +95,11 @@ public class UiBean implements Serializable {
                 .queryParam("password", this.password)
                 .request().get();
 
-        System.out.println("INFO -- user " + response + " logged-in.");
+        Uporabnik uporabnik = response.readEntity(Uporabnik.class);
+        System.out.println("INFO -- user " + uporabnik + " logged-in.");
 
-        this.email = null;
-        this.password = null;
+        //this.email = null;
+        //this.password = null;
 
         if (response.getStatus() == 200) {
             return "user";
