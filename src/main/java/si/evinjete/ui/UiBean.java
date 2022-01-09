@@ -9,6 +9,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.Serializable;
 
 @Named
@@ -89,10 +90,10 @@ public class UiBean implements Serializable {
     public String loginUser() {
         Client client = ClientBuilder.newClient();
         wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/uporabniki/verify");
-        String response = wb
+        Response response = wb
                 .queryParam("user", this.email)
                 .queryParam("password", this.password)
-                .request().get(String.class);
+                .request().get();
 
         System.out.println("INFO -- user " + response + " logged-in.");
 
@@ -101,7 +102,7 @@ public class UiBean implements Serializable {
         this.email = null;
         this.password = null;
 
-        if (response.equals(email)) {
+        if (response.getStatus() == 200) {
             return "user";
         }
 
