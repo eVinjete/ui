@@ -15,25 +15,17 @@
         <h:graphicImage width="70px" name="/img/logo.png"/>
     </header>
     <section>
-        <h4>Registracija</h4>
+        <h4>Vpis</h4>
         <h:form>
-            <div class="form-group">
-                <h:outputLabel for="name">Ime:</h:outputLabel>
-                <h:inputText styleClass="form-control" id="name" value="#{uiBean.name}"/>
-            </div>
-            <div class="form-group">
-                <h:outputLabel for="surname">Priimek:</h:outputLabel>
-                <h:inputText styleClass="form-control" id="surname" value="#{uiBean.surname}"/>
-            </div>
             <div class="form-group">
                 <h:outputLabel for="email">E-naslov:</h:outputLabel>
                 <h:inputText styleClass="form-control" id="email" value="#{uiBean.email}"/>
             </div>
             <div class="form-group">
-                <h:outputLabel for="type">Tip</h:outputLabel>
-                <h:inputText styleClass="form-control" id="type" value="#{uiBean.type}"/>
+                <h:outputLabel for="password">Tip</h:outputLabel>
+                <h:inputText styleClass="form-control" id="password" value="#{uiBean.type}"/>
             </div>
-            <h:commandButton styleClass="btn btn-primary" value="Potrdi" action="#{uiBean.registerUser()}"/>
+            <h:commandButton styleClass="btn btn-primary" value="Potrdi" action="#{uiBean.loginUser()}"/>
             <br/>
             <br/>
             <h:commandButton styleClass="btn btn-secondary" value="Domov" action="welcome"/>
