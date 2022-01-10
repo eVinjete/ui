@@ -9,6 +9,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
@@ -172,7 +173,7 @@ public class UiBean implements Serializable {
         Client client = ClientBuilder.newClient();
         wb = client.target("http://vinjete-service.default.svc.cluster.local:8080/v1/vinjete/uporabnik/"+this.id);
         Response response = wb.request().get();
-        List<Vinjeta> vinjete = response.readEntity(List.class);
+        List<Vinjeta> vinjete = response.readEntity(new GenericType<List<Vinjeta>>() {});
         return vinjete;
     }
 
