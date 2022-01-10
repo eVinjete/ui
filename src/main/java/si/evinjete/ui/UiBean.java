@@ -198,7 +198,7 @@ public class UiBean implements Serializable {
         Client client = ClientBuilder.newClient();
         wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/slike/"+id);
         Response response = wb.request().get();
-        Slika slika = response.readEntity(Slika.class);
+        Slika slika = response.readEntity(new GenericType<Slika>() {});
         String imageString= new String(Base64.getEncoder().encodeToString(slika.getContent()));
         return imageString;
     }
