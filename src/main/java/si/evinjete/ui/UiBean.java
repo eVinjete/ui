@@ -32,6 +32,7 @@ public class UiBean implements Serializable {
     Integer id;
     String direction;
     String location;
+    Vinjeta vinjeta;
 
     public String getName() {
         return name;
@@ -104,6 +105,15 @@ public class UiBean implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public Vinjeta getVinjeta() {
+        return vinjeta;
+    }
+
+    public void setVinjeta(Vinjeta vinjeta) {
+        this.vinjeta = vinjeta;
+    }
+
 
     public void registerUser() {
         Uporabnik uporabnik = new Uporabnik();
@@ -265,5 +275,19 @@ public class UiBean implements Serializable {
         this.direction = null;
         this.location = null;
         this.password = null;
+    }
+
+    public String validate() {
+        Client client = ClientBuilder.newClient();
+        wb = client.target("http://vinjete-service.default.svc.cluster.local:8080/v1/vinjete/tablica/"+this.numberPlate);
+        Response response = wb.request().get();
+        if (response.getStatus() != 404) {
+            Vinjeta vinjeta = response.readEntity(Vinjeta.class);
+            this.numberPlate = null;
+            this.vinjeta = vinjeta;
+            return "valid";
+        }
+        this.numberPlate = null;
+        return "invalid";
     }
 }

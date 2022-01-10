@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://java.sun.com/jsf/html">
+
+<h:head>
+    <title>eVinjete</title>
+    <h:outputStylesheet name="css/style.css" />
+    <h:outputStylesheet name="css/bootstrap.min.css" />
+</h:head>
+<h:body>
+    <header>
+        <h2>eVinjete</h2>
+        <h:graphicImage width="70px" name="/img/logo.png"/>
+    </header>
+    <section>
+        <h4>Nakup vinjete</h4>
+        <h:form>
+            <div class="form-group">
+                <h:outputLabel for="name">Registrska tablica:</h:outputLabel>
+                <h:inputText styleClass="form-control" id="name" value="#{uiBean.numberPlate}"/>
+            </div>
+            <h:commandButton styleClass="btn btn-primary" value="Potrdi" action="#{uiBean.validate()}"/>
+        </h:form>
+        <br /><br />
+        <p:commandButton styleClass="btn btn-secondary" value="Nazaj" id="PreviousOffer" onclick="window.history.go(-1);return false;"/>
+    </section>
+</h:body>
+</html>

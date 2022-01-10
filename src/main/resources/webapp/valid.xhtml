@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://java.sun.com/jsf/html">
+
+<h:head>
+    <title>eVinjete</title>
+    <h:outputStylesheet name="css/style.css" />
+    <h:outputStylesheet name="css/bootstrap.min.css" />
+</h:head>
+<h:body>
+    <header>
+        <h2>eVinjete</h2>
+        <h:graphicImage width="70px" name="/img/logo.png"/>
+    </header>
+    <section>
+        <div class="alert alert-success">
+            Vinjeta je veljavna.
+        </div>
+        <div class="card">
+            <div class="card-body">
+                Registrska tablica: <h:outputText value="#{uiBean.getVinjeta().getNumberPlate()}"/><br />
+                ID: <h:outputText value="#{uiBean.getVinjeta().getId()}"/><br />
+                Čas nakupa: <h:outputText value="#{uiBean.getVinjeta().getTimestamp()}"/><br />
+            </div>
+        </div>
+        <br /><br />
+        <p:commandButton styleClass="btn btn-secondary" value="Nazaj" id="PreviousOffer" onclick="window.history.go(-1);return false;"/>
+    </section>
+</h:body>
+</html>

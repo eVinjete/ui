@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://java.sun.com/jsf/html">
 
 <h:head>
     <title>eVinjete</title>
@@ -15,11 +15,11 @@
         <h:graphicImage width="70px" name="/img/logo.png"/>
     </header>
     <section>
-        <h4><span style="font-size: 11pt;">Pozdravljeni policaj</span> #{uiBean.name} #{uiBean.surname}</h4>
-        <h:form styleClass="btns_form">
-            <h:commandButton styleClass="btn btn-warning btn-lg" value="Seznam prekrškov" action="offence_list"/>
-            <h:commandButton styleClass="btn btn-primary btn-lg" value="Preveri veljavnost vinjete" action="vignette_validate"/>
-        </h:form>
+        <div class="alert alert-danger">
+            Vinjeta ni veljavna.
+        </div>
+        <br /><br />
+        <p:commandButton styleClass="btn btn-secondary" value="Nazaj" id="PreviousOffer" onclick="window.history.go(-1);return false;"/>
     </section>
 </h:body>
 </html>
