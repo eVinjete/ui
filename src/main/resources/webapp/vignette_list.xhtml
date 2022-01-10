@@ -20,9 +20,9 @@
         <ul class="list-group">
             <ui:repeat value="#{uiBean.getVinjete()}" var="vinjeta">
                 <li class="list-group-item">
-                    Registrska tablica: <h:outputText value="#{vinjeta.numberPlate}"/><br />
-                    ID: <h:outputText value="#{vinjeta.id}"/><br />
-                    Čas nakupa: <h:outputText value="#{vinjeta.timestamp}"/><br />
+                    Registrska tablica: <h:outputText value="#{vinjeta.getNumberPlate()}"/><br />
+                    ID: <h:outputText value="#{vinjeta.getId()}"/><br />
+                    Čas nakupa: <h:outputText value="#{vinjeta.getTimestamp()}"/><br />
                 </li>
             </ui:repeat>
         </ul>

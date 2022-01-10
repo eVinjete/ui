@@ -20,11 +20,11 @@
         <ul class="list-group">
             <ui:repeat value="#{uiBean.getPrekrski()}" var="prekrsek">
                 <li class="list-group-item">
-                    ID: <h:outputText value="#{prekrsek.id}"/><br />
-                    Lokacija: <h:outputText value="#{prekrsek.location}"/><br />
-                    Registrska tablica: <h:outputText value="#{prekrsek.numberPlate}"/><br />
-                    Čas: <h:outputText value="#{prekrsek.timestamp}"/><br /><br />
-                    Fotografija: <h:graphicImage value = "data:image/jpg;base64,#{uiBean.getSlika(prekrsek.imageId)}"/>
+                    ID: <h:outputText value="#{prekrsek.getId()}"/><br />
+                    Lokacija: <h:outputText value="#{prekrsek.getLocation()}"/><br />
+                    Registrska tablica: <h:outputText value="#{prekrsek.getNumberPlate()}"/><br />
+                    Čas: <h:outputText value="#{prekrsek.getTimestamp()}"/><br /><br />
+                    Fotografija: <h:graphicImage value = "data:image/jpg;base64,#{uiBean.getSlika(prekrsek.getImageId())}"/>
                 </li>
             </ui:repeat>
         </ul>

@@ -2,7 +2,6 @@ package si.evinjete.ui;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import javax.persistence.*;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -90,11 +89,11 @@ public class UiBean implements Serializable {
 
     public void registerUser() {
         Uporabnik uporabnik = new Uporabnik();
-        uporabnik.name = this.name;
-        uporabnik.surname = this.surname;
-        uporabnik.email = this.email;
-        uporabnik.password = this.password;
-        uporabnik.type = this.type;
+        uporabnik.setName(this.name);
+        uporabnik.setSurname(this.surname);
+        uporabnik.setEmail(this.email);
+        uporabnik.setPassword(this.password);
+        uporabnik.setType(this.type);
 
         Client client = ClientBuilder.newClient();
         wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/uporabniki");
@@ -126,11 +125,11 @@ public class UiBean implements Serializable {
 
         if (response.getStatus() == 200) {
             Uporabnik uporabnik = response.readEntity(Uporabnik.class);
-            System.out.println("INFO -- user " + uporabnik.name + " logged-in.");
-            this.name = uporabnik.name;
-            this.surname = uporabnik.surname;
-            this.type = uporabnik.type;
-            this.id = uporabnik.id;
+            System.out.println("INFO -- user " + uporabnik.getName() + " logged-in.");
+            this.name = uporabnik.getName();
+            this.surname = uporabnik.getSurname();
+            this.type = uporabnik.getType();
+            this.id = uporabnik.getId();
 
             switch (this.type) {
                 case 0:
@@ -151,8 +150,8 @@ public class UiBean implements Serializable {
 
     public String purchase() {
         Vinjeta vinjeta = new Vinjeta();
-        vinjeta.numberPlate = this.numberPlate;
-        vinjeta.clientId = this.id;
+        vinjeta.setNumberPlate(this.numberPlate);
+        vinjeta.setClientId(this.id);
 
         Client client = ClientBuilder.newClient();
         wb = client.target("http://vinjete-service.default.svc.cluster.local:8080/v1/vinjete");
@@ -201,40 +200,7 @@ public class UiBean implements Serializable {
         wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/slike/"+id);
         Response response = wb.request().get();
         Slika slika = response.readEntity(Slika.class);
-        String imageString= new String(Base64.getEncoder().encodeToString(slika.content));
+        String imageString= new String(Base64.getEncoder().encodeToString(slika.getContent()));
         return imageString;
     }
-}
-
-class Uporabnik implements Serializable {
-    public Integer id;
-    public String name;
-    public String surname;
-    public String email;
-    public String password;
-    public Date timestamp;
-    public Integer type; //Type of user - 0 means normal user, 1 is police officer, 2 is admin
-}
-
-class Vinjeta implements Serializable {
-    public Integer id;
-    public Integer clientId;
-    public String numberPlate;
-    public Date timestamp;
-}
-
-class Prekrsek implements Serializable {
-    public Integer id;
-    public String numberPlate;
-    public String location;
-    public Date timestamp;
-    public Integer imageId;
-}
-
-class Slika implements Serializable {
-    public Integer id;
-    public String numberPlate;
-    public String location;
-    public Date timestamp;
-    public byte[] content;
 }
