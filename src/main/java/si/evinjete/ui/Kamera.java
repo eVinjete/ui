@@ -6,6 +6,7 @@ import java.util.Date;
 public class Kamera implements Serializable {
 
     private Integer id;
+    private String password;
     private String location;
     private Date timestamp;
     private String direction;
@@ -40,5 +41,13 @@ public class Kamera implements Serializable {
 
     public void setDirection(String direction) {
         this.direction = direction;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

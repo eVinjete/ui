@@ -256,6 +256,7 @@ public class UiBean implements Serializable {
         Kamera kamera = new Kamera();
         kamera.setDirection(this.direction);
         kamera.setLocation(this.location);
+        kamera.setPassword(this.password);
 
         Client client = ClientBuilder.newClient();
         wb = client.target("http://kamere-service.default.svc.cluster.local:8080/v1/kamere/");
@@ -263,5 +264,6 @@ public class UiBean implements Serializable {
 
         this.direction = null;
         this.location = null;
+        this.password = null;
     }
 }
