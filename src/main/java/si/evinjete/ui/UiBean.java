@@ -186,7 +186,7 @@ public class UiBean implements Serializable {
         List<Vinjeta> vinjete = response.readEntity(new GenericType<List<Vinjeta>>() {});
 
         for (Vinjeta vinjeta: vinjete) {
-            wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/prekrski/tablica/"+this.id);
+            wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/prekrski/tablica/"+vinjeta.getNumberPlate());
             response = wb.request().get();
             List<Prekrsek> prekrski = response.readEntity(new GenericType<List<Prekrsek>>() {});
             userPrekrski.addAll(prekrski);

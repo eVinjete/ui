@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://java.sun.com/jsf/html">
 
 <h:head>
     <title>eVinjete</title>
@@ -38,10 +38,9 @@
                 <h:inputText styleClass="form-control" id="type" value="#{uiBean.type}"/>
             </div>
             <h:commandButton styleClass="btn btn-primary" value="Potrdi" action="#{uiBean.registerUser()}"/>
-            <br/>
-            <br/>
-            <h:commandButton styleClass="btn btn-secondary" value="Domov" action="welcome"/>
         </h:form>
+        <br /><br />
+        <p:commandButton styleClass="btn btn-secondary" value="Nazaj" id="PreviousOffer" onclick="window.history.go(-1);return false;"/>
     </section>
 </h:body>
 </html>

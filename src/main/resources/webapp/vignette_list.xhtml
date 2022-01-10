@@ -3,7 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://java.sun.com/jsf/html">
 
 <h:head>
     <title>eVinjete</title>
@@ -26,9 +26,8 @@
                 </li>
             </ui:repeat>
         </ul>
-        <h:form>
-            <h:commandButton styleClass="btn btn-secondary" value="Nazaj" action="user"/>
-        </h:form>
+        <br /><br />
+        <p:commandButton styleClass="btn btn-secondary" value="Nazaj" id="PreviousOffer" onclick="window.history.go(-1);return false;"/>
     </section>
 </h:body>
 </html>
