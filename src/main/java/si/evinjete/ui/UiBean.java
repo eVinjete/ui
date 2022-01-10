@@ -260,5 +260,8 @@ public class UiBean implements Serializable {
         Client client = ClientBuilder.newClient();
         wb = client.target("http://kamere-service.default.svc.cluster.local:8080/v1/kamere/");
         Response response = wb.request(MediaType.APPLICATION_JSON).post(Entity.json(kamera));
+
+        this.direction = null;
+        this.location = null;
     }
 }
