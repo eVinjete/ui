@@ -12,7 +12,6 @@ import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 
 @Named
@@ -186,6 +185,7 @@ public class UiBean implements Serializable {
         List<Vinjeta> vinjete = response.readEntity(new GenericType<List<Vinjeta>>() {});
 
         for (Vinjeta vinjeta: vinjete) {
+            client = ClientBuilder.newClient();
             wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/prekrski/tablica/"+vinjeta.getNumberPlate());
             response = wb.request().get();
             List<Prekrsek> prekrski = response.readEntity(new GenericType<List<Prekrsek>>() {});
