@@ -1,6 +1,7 @@
 package si.evinjete.ui;
 
 import si.evinjete.uporabniki.Uporabnik;
+import si.evinjete.vinjete.Vinjeta;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -23,8 +24,10 @@ public class UiBean implements Serializable {
     String name;
     String surname;
     String email;
-    String type;
+    Integer type;
     String password;
+    String numberPlate;
+    Integer id;
 
     public String getName() {
         return name;
@@ -50,11 +53,11 @@ public class UiBean implements Serializable {
         this.email = email;
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -66,13 +69,29 @@ public class UiBean implements Serializable {
         this.password = password;
     }
 
+    public String getNumberPlate() {
+        return numberPlate;
+    }
+
+    public void setNumberPlate(String numberPlate) {
+        this.numberPlate = numberPlate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public void registerUser() {
         Uporabnik uporabnik = new Uporabnik();
         uporabnik.setName(this.name);
         uporabnik.setSurname(this.surname);
         uporabnik.setEmail(this.email);
         uporabnik.setPassword(this.password);
-        uporabnik.setType(Integer.parseInt(this.type));
+        uporabnik.setType(this.type);
 
         Client client = ClientBuilder.newClient();
         wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/uporabniki");
@@ -85,6 +104,7 @@ public class UiBean implements Serializable {
         this.email = null;
         this.password = null;
         this.type = null;
+        this.id = null;
     }
 
     public String loginUser() {
@@ -106,11 +126,44 @@ public class UiBean implements Serializable {
             System.out.println("INFO -- user " + uporabnik.getName() + " logged-in.");
             this.name = uporabnik.getName();
             this.surname = uporabnik.getSurname();
-            return "user";
+            this.type = uporabnik.getType();
+            this.id = uporabnik.getId();
+
+            switch (this.type) {
+                case 0:
+                    return "user";
+                case 1:
+                    return "officer";
+                case 2:
+                    return "admin";
+                default:
+                    return "welcome";
+            }
         }
 
         this.email = null;
         this.password = null;
         return "wrong";
+    }
+
+    public String purchase() {
+        Vinjeta vinjeta = new Vinjeta();
+        vinjeta.setNumberPlate(this.numberPlate);
+        vinjeta.setClientId(this.id);
+
+        Client client = ClientBuilder.newClient();
+        wb = client.target("http://vinjete-service.default.svc.cluster.local:8080/v1/vinjete");
+        Response response = wb.request(MediaType.APPLICATION_JSON).post(Entity.json(vinjeta));
+
+        if (response.getStatus() == 406) {
+            this.numberPlate = null;
+            return "fail";
+        }
+
+        if (response.getStatus() == 200) {
+            return "purchase_success";
+        }
+
+        return "fail";
     }
 }

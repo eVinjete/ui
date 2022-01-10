@@ -15,11 +15,16 @@
         <h:graphicImage width="70px" name="/img/logo.png"/>
     </header>
     <section>
-        <h4><span style="font-size: 11pt;">Pozdravljeni</span> #{uiBean.name} #{uiBean.surname}</h4>
+        <h4>Nakup vinjete</h4>
         <h:form>
-            <h:commandButton styleClass="btn btn-success btn-lg" value="Nakup vinjete" action="purchase"/>&nbsp;&nbsp;
-            <h:commandButton styleClass="btn btn-secondary btn-lg" value="Seznam vinjet" action="vignette_list"/>&nbsp;&nbsp;
-            <h:commandButton styleClass="btn btn-warning btn-lg" value="Seznam prekrškov" action="offence_list"/>
+            <div class="form-group">
+                <h:outputLabel for="name">Ime:</h:outputLabel>
+                <h:inputText styleClass="form-control" id="name" value="#{uiBean.numberPlate}"/>
+            </div>
+            <h:commandButton styleClass="btn btn-primary" value="Potrdi" action="#{uiBean.purchase()}"/>
+            <br/>
+            <br/>
+            <h:commandButton styleClass="btn btn-secondary" value="Nazaj" action="user"/>
         </h:form>
     </section>
 </h:body>
