@@ -16,6 +16,7 @@
         <h:graphicImage width="70px" name="/img/logo.png"/>
     </header>
     <section>
+        <h4>Seznam vinjet</h4>
         <ul class="list-group">
             <ui:repeat value="#{uiBean.getVinjete()}" var="vinjeta">
                 <li class="list-group-item">
@@ -25,6 +26,9 @@
                 </li>
             </ui:repeat>
         </ul>
+        <h:form>
+            <h:commandButton styleClass="btn btn-secondary" value="Nazaj" action="user"/>
+        </h:form>
     </section>
 </h:body>
 </html>

@@ -1,8 +1,5 @@
 package si.evinjete.ui;
 
-import si.evinjete.uporabniki.Uporabnik;
-import si.evinjete.vinjete.Vinjeta;
-
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
@@ -13,6 +10,8 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Named
@@ -89,11 +88,11 @@ public class UiBean implements Serializable {
 
     public void registerUser() {
         Uporabnik uporabnik = new Uporabnik();
-        uporabnik.setName(this.name);
-        uporabnik.setSurname(this.surname);
-        uporabnik.setEmail(this.email);
-        uporabnik.setPassword(this.password);
-        uporabnik.setType(this.type);
+        uporabnik.name = this.name;
+        uporabnik.surname = this.surname;
+        uporabnik.email = this.email;
+        uporabnik.password = this.password;
+        uporabnik.type = this.type;
 
         Client client = ClientBuilder.newClient();
         wb = client.target("http://uporabniki-service.default.svc.cluster.local:8080/v1/uporabniki");
@@ -125,11 +124,11 @@ public class UiBean implements Serializable {
 
         if (response.getStatus() == 200) {
             Uporabnik uporabnik = response.readEntity(Uporabnik.class);
-            System.out.println("INFO -- user " + uporabnik.getName() + " logged-in.");
-            this.name = uporabnik.getName();
-            this.surname = uporabnik.getSurname();
-            this.type = uporabnik.getType();
-            this.id = uporabnik.getId();
+            System.out.println("INFO -- user " + uporabnik.name + " logged-in.");
+            this.name = uporabnik.name;
+            this.surname = uporabnik.surname;
+            this.type = uporabnik.type;
+            this.id = uporabnik.id;
 
             switch (this.type) {
                 case 0:
@@ -150,8 +149,8 @@ public class UiBean implements Serializable {
 
     public String purchase() {
         Vinjeta vinjeta = new Vinjeta();
-        vinjeta.setNumberPlate(this.numberPlate);
-        vinjeta.setClientId(this.id);
+        vinjeta.numberPlate = this.numberPlate;
+        vinjeta.clientId = this.id;
 
         Client client = ClientBuilder.newClient();
         wb = client.target("http://vinjete-service.default.svc.cluster.local:8080/v1/vinjete");
@@ -177,15 +176,46 @@ public class UiBean implements Serializable {
         return vinjete;
     }
 
-//    public List<Vinjeta> getPrekrski(){
-//        Client client = ClientBuilder.newClient();
-//        wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/prekrski");
-//        Response response = wb
-//                .queryParam("numberPlate", this.id)
-//                .request().get();
-//
-//        List<Prekrsek> vinjete = response.readEntity(List<Prekrsek>.class);
-//
-//        return vinjete;
-//    }
+    public List<Vinjeta> getPrekrski(){
+        List<Prekrsek> userPrekrski = new ArrayList<Prekrsek>();
+
+        Client client = ClientBuilder.newClient();
+        wb = client.target("http://vinjete-service.default.svc.cluster.local:8080/v1/vinjete/uporabnik/"+this.id);
+        Response response = wb.request().get();
+        List<Vinjeta> vinjete = response.readEntity(new GenericType<List<Vinjeta>>() {});
+
+        for (Vinjeta vinjeta: vinjete) {
+            wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/prekrski/tablica/"+this.id);
+            response = wb.request().get();
+            List<Prekrsek> prekrski = response.readEntity(new GenericType<List<Prekrsek>>() {});
+            userPrekrski.addAll(prekrski);
+        }
+
+        return vinjete;
+    }
+}
+
+class Uporabnik implements Serializable {
+    public Integer id;
+    public String name;
+    public String surname;
+    public String email;
+    public String password;
+    public Date timestamp;
+    public Integer type; //Type of user - 0 means normal user, 1 is police officer, 2 is admin
+}
+
+class Vinjeta implements Serializable {
+    public Integer id;
+    public Integer clientId;
+    public String numberPlate;
+    public Date timestamp;
+}
+
+class Prekrsek implements Serializable {
+    public Integer id;
+    public String numberPlate;
+    public String location;
+    public Date timestamp;
+    public Integer imageId;
 }
