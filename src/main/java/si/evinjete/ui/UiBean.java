@@ -218,4 +218,18 @@ public class UiBean implements Serializable {
         }
         return "";
     }
+
+    public List<Kamera> getKamere(){
+        Client client = ClientBuilder.newClient();
+        wb = client.target("http://kamere-service.default.svc.cluster.local:8080/v1/kamere/");
+        Response response = wb.request().get();
+        List<Kamera> kamere = response.readEntity(new GenericType<List<Kamera>>() {});
+        return kamere;
+    }
+
+    public void removeKamera(Integer id){
+        Client client = ClientBuilder.newClient();
+        wb = client.target("http://kamere-service.default.svc.cluster.local:8080/v1/kamere/"+id);
+        Response response = wb.request().delete();
+    }
 }
