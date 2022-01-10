@@ -24,7 +24,7 @@
                     Lokacija: <h:outputText value="#{prekrsek.getLocation()}"/><br />
                     Registrska tablica: <h:outputText value="#{prekrsek.getNumberPlate()}"/><br />
                     Čas: <h:outputText value="#{prekrsek.getTimestamp()}"/><br /><br />
-                    Fotografija: <h:graphicImage value = "data:image/jpg;base64,#{slikaBean.getContentString(prekrsek.getImageId())}"/>
+                    Fotografija: <h:graphicImage value = "data:image/jpg;base64,#{uiBean.getSlika(prekrsek.imageId)}"/>
                 </li>
             </ui:repeat>
         </ul>

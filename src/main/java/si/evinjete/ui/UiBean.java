@@ -2,6 +2,7 @@ package si.evinjete.ui;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import javax.persistence.*;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -193,6 +195,15 @@ public class UiBean implements Serializable {
 
         return vinjete;
     }
+
+    public String getSlika(Integer id){
+        Client client = ClientBuilder.newClient();
+        wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/slike/"+id);
+        Response response = wb.request().get();
+        Slika slika = response.readEntity(Slika.class);
+        String imageString= new String(Base64.getEncoder().encodeToString(slika.content));
+        return imageString;
+    }
 }
 
 class Uporabnik implements Serializable {
@@ -218,4 +229,12 @@ class Prekrsek implements Serializable {
     public String location;
     public Date timestamp;
     public Integer imageId;
+}
+
+class Slika implements Serializable {
+    public Integer id;
+    public String numberPlate;
+    public String location;
+    public Date timestamp;
+    public byte[] content;
 }
