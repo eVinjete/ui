@@ -12,6 +12,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
+import java.util.List;
 
 @Named
 @SessionScoped
@@ -166,4 +167,24 @@ public class UiBean implements Serializable {
 
         return "fail";
     }
+
+    public List<Vinjeta> getVinjete(){
+        Client client = ClientBuilder.newClient();
+        wb = client.target("http://vinjete-service.default.svc.cluster.local:8080/v1/vinjete/uporabnik/"+this.id);
+        Response response = wb.request().get();
+        List<Vinjeta> vinjete = response.readEntity(List.class);
+        return vinjete;
+    }
+
+//    public List<Vinjeta> getPrekrski(){
+//        Client client = ClientBuilder.newClient();
+//        wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/prekrski");
+//        Response response = wb
+//                .queryParam("numberPlate", this.id)
+//                .request().get();
+//
+//        List<Prekrsek> vinjete = response.readEntity(List<Prekrsek>.class);
+//
+//        return vinjete;
+//    }
 }

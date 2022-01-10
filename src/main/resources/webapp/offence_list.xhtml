@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>eVinjete</title>
+    <h:outputStylesheet name="css/style.css" />
+    <h:outputStylesheet name="css/bootstrap.min.css" />
+</h:head>
+<h:body>
+    <header>
+        <h2>eVinjete</h2>
+        <h:graphicImage width="70px" name="/img/logo.png"/>
+    </header>
+    <section>
+        <ul class="list-group">
+            <ui:repeat value="#{uiBean.getPrekrski()}" var="prekrsek">
+                <li class="list-group-item">
+                    ID: <h:outputText value="#{prekrsek.getId()}"/><br />
+                    Lokacija: <h:outputText value="#{prekrsek.getLocation()}"/><br />
+                    Registrska tablica: <h:outputText value="#{prekrsek.getNumberPlate()}"/><br />
+                    Čas: <h:outputText value="#{prekrsek.getTimestamp()}"/><br /><br />
+                    Fotografija: <h:graphicImage value = "data:image/jpg;base64,#{slikaBean.getContentString(prekrsek.getImageId())}"/>
+                </li>
+            </ui:repeat>
+        </ul>
+    </section>
+</h:body>
+</html>
