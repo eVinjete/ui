@@ -178,14 +178,27 @@ public class UiBean implements Serializable {
 
     public List<Prekrsek> getPrekrski(){
         List<Prekrsek> userPrekrski = new ArrayList<Prekrsek>();
-
         Client client = ClientBuilder.newClient();
-        wb = client.target("http://vinjete-service.default.svc.cluster.local:8080/v1/vinjete/uporabnik/"+this.id);
-        Response response = wb.request().get();
-        List<Vinjeta> vinjete = response.readEntity(new GenericType<List<Vinjeta>>() {});
+        Response response;
 
-        for (Vinjeta vinjeta: vinjete) {
-            wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/prekrski/tablica/"+vinjeta.getNumberPlate());
+        if (this.type == 0) {
+
+            wb = client.target("http://vinjete-service.default.svc.cluster.local:8080/v1/vinjete/uporabnik/" + this.id);
+            response = wb.request().get();
+            List<Vinjeta> vinjete = response.readEntity(new GenericType<List<Vinjeta>>() {});
+
+            for (Vinjeta vinjeta: vinjete) {
+                wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/prekrski/tablica/"+vinjeta.getNumberPlate());
+                response = wb.request().get();
+                List<Prekrsek> prekrski = response.readEntity(new GenericType<List<Prekrsek>>() {});
+                userPrekrski.addAll(prekrski);
+            }
+
+            return userPrekrski;
+        }
+
+        if (this.type == 1) {
+            wb = client.target("http://prekrski-service.default.svc.cluster.local:8080/v1/prekrski/");
             response = wb.request().get();
             List<Prekrsek> prekrski = response.readEntity(new GenericType<List<Prekrsek>>() {});
             userPrekrski.addAll(prekrski);
