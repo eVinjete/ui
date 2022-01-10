@@ -18,15 +18,14 @@
     <section>
         <h4>Dodaj kamero</h4>
         <h:form>
-            <h:outputLabel for="location">
-                Lokacija:
-                <h:inputText id="location" value="#{uiBean.location}"/>
-            </h:outputLabel>
-            <br/>
-            <h:outputLabel for="direction">
-                Smer:
-                <h:inputText id="direction" value="#{uiBean.direction}"/>
-            </h:outputLabel>
+            <div class="form-group">
+                <h:outputLabel for="location">Lokacija:</h:outputLabel>
+                <h:inputText styleClass="form-control" id="location" value="#{uiBean.location}"/>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="direction">Smer:</h:outputLabel>
+                <h:inputText styleClass="form-control" id="direction" value="#{uiBean.direction}"/>
+            </div>
             <br/>
             <h:commandButton styleClass="btn btn-primary" value="Dodaj" action="#{uiBean.addKamera()}"/>
         </h:form>
