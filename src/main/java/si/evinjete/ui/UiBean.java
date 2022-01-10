@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 @Named
@@ -29,6 +30,8 @@ public class UiBean implements Serializable {
     String password;
     String numberPlate;
     Integer id;
+    String direction;
+    String location;
 
     public String getName() {
         return name;
@@ -84,6 +87,22 @@ public class UiBean implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public void registerUser() {
@@ -231,5 +250,15 @@ public class UiBean implements Serializable {
         Client client = ClientBuilder.newClient();
         wb = client.target("http://kamere-service.default.svc.cluster.local:8080/v1/kamere/"+id);
         Response response = wb.request().delete();
+    }
+
+    public void addKamera(){
+        Kamera kamera = new Kamera();
+        kamera.setDirection(this.direction);
+        kamera.setLocation(this.location);
+
+        Client client = ClientBuilder.newClient();
+        wb = client.target("http://kamere-service.default.svc.cluster.local:8080/v1/kamere/");
+        Response response = wb.request(MediaType.APPLICATION_JSON).post(Entity.json(kamera));
     }
 }
